@@ -25,9 +25,16 @@ class FamilyList(generics.ListAPIView):
     def get_queryset(self):
         queryset = Family.objects.all()
         name = self.request.query_params.get("name", None)
-        print(name)
-        if name == "Aaron":
-            queryset = queryset.filter(name=name)
+        exactMatch = self.request.query_params.get("exactMatch", None)
+        history = self.request.query_params.get("history", None)
+        crest = self.request.query_params.get("crest", None)
+        prdImages = self.request.query_params.get("prdImages", None)
+        itemsPerPage = self.request.query_params.get("itemsPerPage", None)
+        page = self.request.query_params.get("page", None)
+
+        if len(name) >=3:
+            if exactMatch == "true":
+                queryset = queryset.filter(name=name)                
         else:
-            raise ValidationError(detail="size must be either 'large' or 'small'")
+            raise ValidationError(detail="name must contain at least 3 characters")
         return queryset

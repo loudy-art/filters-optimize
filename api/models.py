@@ -7,19 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
-class Crest(models.Model):
-    crest_id = models.IntegerField(primary_key=True)
-    crest_url = models.CharField(max_length=300, db_collation='latin1_swedish_ci')
-    name_id = models.IntegerField()
-    caption = models.CharField(max_length=255, db_collation='latin1_swedish_ci')
-    clan = models.IntegerField()
-    condicion = models.IntegerField()
-
-    class Meta:
-        db_table = 'crest'
-
-
 class Family(models.Model):
     name_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -33,12 +20,22 @@ class Family(models.Model):
     class Meta:
         db_table = 'family'
 
+class Crest(models.Model):
+    crest_id = models.IntegerField(primary_key=True)
+    crest_url = models.CharField(max_length=300, db_collation='latin1_swedish_ci')
+    name_id = models.ForeignKey(Family, related_name="crests", on_delete=models.CASCADE, db_column="name_id")
+    caption = models.CharField(max_length=255, db_collation='latin1_swedish_ci')
+    clan = models.IntegerField()
+    condicion = models.IntegerField()
+
+    class Meta:
+        db_table = 'crest'
 
 class Image(models.Model):
     img_id = models.IntegerField(primary_key=True)
     image_info = models.CharField(max_length=1000, db_collation='latin1_swedish_ci')
     image_url = models.CharField(max_length=1000, db_collation='latin1_swedish_ci')
-    name_id = models.IntegerField()
+    name_id = models.ForeignKey(Family, related_name="images", on_delete=models.CASCADE, db_column="name_id")
     type = models.CharField(max_length=255, db_collation='latin1_swedish_ci')
     condicion = models.IntegerField()
 
