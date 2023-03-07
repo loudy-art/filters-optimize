@@ -30,7 +30,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/loudy/Projects/django-api-customfilters/env"
+set -gx VIRTUAL_ENV "/home/loudy/Projects/api-filters-nodeploy/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
